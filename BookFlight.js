@@ -20,11 +20,18 @@ function book_flight(){
     <tr><th colspan="2"><button type="button" class="btn btn-outline-secondary" onclick="validation()">Book Flight</button></th></tr>`;
 }
 
+function price(){
+    var num = document.getElementById("nop").value;
+    document.getElementById("ttax").innerHTML = num * ((data.flights[id-1].price)/10);
+    document.getElementById("total").innerHTML = (num * (data.flights[id-1].price)) + (num * ((data.flights[id-1].price)/10))
+    return (num * (data.flights[id-1].price)) + (num * ((data.flights[id-1].price)/10));
+}
+
 function validation(){
     var name = document.getElementById("pname").value;
     var no = document.getElementById("nop").value;
-    var total_price = document.getElementById("total").value;
     var departureDate = data.flights[id-1].departureDate;
+    var flightName = data.flights[id-1].name;
     var flag = 0;
     var flag1 = 0;
     if (flag == 0 || flag1 == 0) {
@@ -40,17 +47,11 @@ function validation(){
             document.getElementById("ErrorQty").innerText = "";
             flag1 = 1;
         }
-    } else {
+    } 
+    if (flag == 1 && flag1 == 1) {
         let pnr = Math.floor((Math.random()*1000000)+1);
-        localStorage.setItem(pnr, [name, total_price, no, "2024-01-02", departureDate]);
+        localStorage.setItem(pnr, [flightName, price(), no, "2024-01-02", departureDate]);
+        location.replace("BookingHistory.html")
     }
-    
-
-
 }
 
-function price(){
-    var num = document.getElementById("nop").value;
-    document.getElementById("ttax").innerHTML = num * ((data.flights[id-1].price)/10);
-    document.getElementById("total").innerHTML = (num * (data.flights[id-1].price)) + (num * ((data.flights[id-1].price)/10))
-}
